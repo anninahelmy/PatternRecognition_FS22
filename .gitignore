@@ -133,3 +133,10 @@ bin/
 init/
 lib64
 pyvenv.cfg
+share/
+
+# jupyter
+etc/
+
+# images
+**/mnist*
