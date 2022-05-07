@@ -140,3 +140,4 @@ etc/
 
 # images
 **/mnist*
+Keyword Spotting/resized_cutouts/
