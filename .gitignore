@@ -141,3 +141,6 @@ etc/
 # images
 **/mnist*
 Keyword Spotting/resized_cutouts/
+
+# pickled objects
+Keyword Spotting/pickled/
