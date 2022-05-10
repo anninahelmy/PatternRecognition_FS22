@@ -96,4 +96,4 @@ def get_dist(a, b):
 
 
 def dist_mat(a, b):
-    np.array([[get_dist(i, j) for j in b] for i in a])
+    return np.array([[get_dist(i, j) for j in b] for i in a])
