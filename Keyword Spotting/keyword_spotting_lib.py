@@ -7,7 +7,7 @@ from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 
 def remove_pt(word):
-    filter_ = ["-s_cm", "-s_pt", "-s_qo"]
+    filter_ = ["-s_cm", "-s_pt", "-s_qo", "-s_qt", "-s_sq"]
     if any(word.endswith(pt) for pt in filter_):
         index = max(word.find(pt) for pt in filter_)
         return word[:index]
