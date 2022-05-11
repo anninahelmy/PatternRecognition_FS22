@@ -2,7 +2,6 @@ from PIL import Image, ImageDraw
 import xml.etree.ElementTree as ET
 import numpy as np
 import os
-from dtaidistance import dtw
 
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
@@ -89,12 +88,7 @@ def crop_images(imgs):
 
 
 def get_dist(a, b):
-    x = np.array(a.resize((100, a.size[1])), dtype=np.double)
-    y = np.array(b.resize((100, b.size[1])), dtype=np.double)
-    print(x.flatten().shape)
-    print(y.flatten().shape)
-
-    distance , _ = fastdtw(x, y, dist=euclidean)
+    distance , _ = fastdtw(a, b, dist=euclidean)
     # distance = dtw.distance_fast(x.flatten(), y.flatten(), use_pruning=True)
     return distance
 
