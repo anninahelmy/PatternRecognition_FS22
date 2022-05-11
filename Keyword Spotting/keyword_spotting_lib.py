@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw
 import xml.etree.ElementTree as ET
 import numpy as np
 import os
+from dtaidistance import dtw
 
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
@@ -88,12 +89,28 @@ def crop_images(imgs):
 
 
 def get_dist(a, b):
-    x = np.array(a.resize((100, a.size[1])))
-    y = np.array(b.resize((100, b.size[1])))
+    x = np.array(a.resize((100, a.size[1])), dtype=np.double)
+    y = np.array(b.resize((100, b.size[1])), dtype=np.double)
+    print(x.flatten().shape)
+    print(y.flatten().shape)
 
-    distance, _ = fastdtw(x, y, dist=euclidean)
+    distance , _ = fastdtw(x, y, dist=euclidean)
+    # distance = dtw.distance_fast(x.flatten(), y.flatten(), use_pruning=True)
     return distance
 
 
 def dist_mat(a, b):
-    np.array([[get_dist(i, j) for j in b] for i in a])
+    return np.array([[get_dist(i, j) for j in b] for i in a])
+
+
+def contours(img):
+    idx = img.nonzero()
+    nonzeros = [(r, c.nonzero()[-1]) for r, c in enumerate(1-img.T) if len(c.nonzero()[0]) > 0]
+    cols = [i for (i, j) in nonzeros]
+    rows_upper = [np.max(j) for (i, j) in nonzeros]
+    rows_lower = [np.min(j) for (i, j) in nonzeros]
+    z = (1 - np.zeros(img.shape)).T
+    z[cols, rows_upper] = -1
+    z[cols, rows_lower] = -1
+
+    return z.T
