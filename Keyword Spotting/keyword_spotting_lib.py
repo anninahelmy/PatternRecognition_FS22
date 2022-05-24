@@ -19,6 +19,7 @@ def mapping():
     with open("ground-truth/transcription.txt", "r") as t:
         # mapping "position -> word" (not the other way around since word may not be unique)
         pos_to_word = {name: remove_pt(word) for (name, word) in [l.strip().split(" ") for l in t]}
+        print(pos_to_word) 
         # get all page numbers
         pages = {k.split("-", 1)[0] for k in pos_to_word.keys()}
         # construct a dict like this: {"270": {"270-01-01": 0, "270-01-02": 1, ...}, "271": ...}
